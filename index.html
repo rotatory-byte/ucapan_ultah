@@ -1,0 +1,1601 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Untuk Kamu, Sayang 🤍</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=DM+Serif+Display&family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+        font-family: Poppins, Arial, sans-serif;
+        color: #555769;
+      }
+      body {
+        overflow-x: hidden;
+        background: linear-gradient(135deg, #ffdbe5, #fff7fa 50%, #ffe8f0);
+      }
+      button,
+      textarea {
+        font: inherit;
+      }
+      .bg {
+        position: fixed;
+        inset: 0;
+        overflow: hidden;
+        pointer-events: none;
+        z-index: 0;
+      }
+      .petal {
+        position: absolute;
+        width: 14px;
+        height: 20px;
+        border-radius: 80% 20%;
+        background: linear-gradient(135deg, #ff7e9e, #ffd0db);
+        opacity: 0.55;
+        animation: fall 12s linear infinite;
+      }
+      .petal:after {
+        content: "";
+        position: absolute;
+        left: -5px;
+        bottom: -4px;
+        width: 5px;
+        height: 12px;
+        background: #7caf72;
+        border-radius: 9px;
+        transform: rotate(-30deg);
+      }
+      @keyframes fall {
+        from {
+          transform: translateY(110vh) rotate(0);
+          opacity: 0;
+        }
+        12% {
+          opacity: 0.65;
+        }
+        to {
+          transform: translate(50px, -10vh) rotate(330deg);
+          opacity: 0;
+        }
+      }
+      .music {
+        position: fixed;
+        right: 18px;
+        top: 18px;
+        z-index: 100;
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        border: 2px solid #ff5b82;
+        background: #fff;
+        color: #ff5b82;
+      }
+      .music.play {
+        background: #ff5b82;
+        color: #fff;
+        animation: spin 3s linear infinite;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .progress {
+        position: fixed;
+        top: 16px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 90;
+        display: flex;
+        gap: 7px;
+        padding: 7px 10px;
+        border-radius: 99px;
+        background: rgba(255, 255, 255, 0.65);
+        backdrop-filter: blur(10px);
+      }
+      .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 99px;
+        background: #ffd1dc;
+      }
+      .dot.active {
+        width: 24px;
+        background: #ff5b82;
+      }
+      .dot.done {
+        background: #e694ac;
+      }
+      .slide {
+        display: none;
+        min-height: 100vh;
+        position: relative;
+        z-index: 2;
+        padding: 78px 12px 35px;
+        animation: in 0.55s ease;
+      }
+      .slide.active {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      @keyframes in {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      .card {
+        width: min(680px, 100%);
+        padding: 28px 20px;
+        border-radius: 30px;
+        background: rgba(255, 255, 255, 0.88);
+        box-shadow: 0 25px 70px rgba(190, 75, 110, 0.15);
+        backdrop-filter: blur(16px);
+      }
+      .center {
+        text-align: center;
+      }
+      .eyebrow {
+        display: inline-flex;
+        gap: 7px;
+        padding: 8px 13px;
+        border-radius: 99px;
+        background: #fff0f5;
+        color: #d23b61;
+        font-weight: 700;
+        font-size: 0.78rem;
+      }
+      .title,
+      h1,
+      h2,
+      h3 {
+        font-family: "DM Serif Display", serif;
+        color: #ce3c5f;
+      }
+      .title {
+        font-size: 2.2rem;
+        line-height: 1.05;
+        margin: 12px 0 7px;
+      }
+      .sub {
+        color: #888b98;
+        font-size: 0.88rem;
+        line-height: 1.7;
+      }
+      .btn {
+        border: 0;
+        border-radius: 99px;
+        padding: 13px 20px;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      .primary {
+        background: linear-gradient(135deg, #ff6f92, #e9466c);
+        color: #fff;
+        box-shadow: 0 14px 30px rgba(233, 70, 108, 0.2);
+      }
+      .secondary {
+        background: #fff0f5;
+        color: #ef4a72;
+        border: 1px dashed #ff8cab;
+      }
+      /* memory */
+      .memory {
+        width: min(390px, 100%);
+        margin: 20px auto;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 11px;
+      }
+      .mcard {
+        border: 0;
+        background: transparent;
+        aspect-ratio: 1/1;
+        width: 100%;
+        min-width: 0;
+        display: block;
+        padding: 0;
+        perspective: 900px;
+        cursor: pointer;
+      }
+      .mi {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: block;
+        transform-style: preserve-3d;
+        transition: transform 0.58s;
+      }
+      .mcard.flipped .mi,
+      .mcard.matched .mi {
+        transform: rotateY(180deg);
+      }
+      .mf {
+        position: absolute;
+        inset: 0;
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+        border-radius: 18px;
+        overflow: hidden;
+        display: grid;
+        place-items: center;
+      }
+      .back {
+        background: repeating-linear-gradient(
+          45deg,
+          #ff8eab 0 10px,
+          #ffabc0 10px 20px
+        );
+        color: #fff;
+        box-shadow: 0 12px 22px rgba(220, 75, 109, 0.15);
+        font-size: 1.3rem;
+      }
+      .front {
+        transform: rotateY(180deg);
+        background: #fff8fa;
+        border: 2px solid #ffd3de;
+      }
+      .front-emoji {
+        font-size: 3.1rem;
+        line-height: 1;
+        display: block;
+        transform: translateZ(1px);
+        filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.08));
+      }
+      .matched .front {
+        background: #f2fff5;
+        border-color: #bfe4c8;
+      }
+      .shake .mi {
+        animation: shake 0.4s;
+      }
+      @keyframes shake {
+        25% {
+          transform: rotateY(180deg) translateX(-5px);
+        }
+        75% {
+          transform: rotateY(180deg) translateX(5px);
+        }
+      }
+      .counter {
+        margin-top: 15px;
+        color: #ee5076;
+        font-size: 0.8rem;
+        font-weight: 700;
+      }
+      /* birthday */
+      .flower-row {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 14px;
+        margin: 2px 0 4px;
+      }
+      .tulip-emoji {
+        display: inline-block;
+        font-size: 2.65rem;
+        line-height: 1;
+        animation: bob 3s ease-in-out infinite;
+      }
+      .tulip-emoji:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .tulip-emoji:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+      @keyframes bob {
+        50% {
+          transform: translateY(-4px);
+        }
+      }
+      .lovephoto {
+        width: min(420px, 100%);
+        margin: 12px auto;
+        padding: 9px;
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 17px 34px rgba(79, 64, 76, 0.15);
+        transform: rotate(-2deg);
+        position: relative;
+      }
+      .lovephoto:before {
+        content: "";
+        position: absolute;
+        top: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 72px;
+        height: 20px;
+        background: #ffb8c8;
+        border: 1px dashed #fff;
+      }
+      .lovephoto img {
+        width: 100%;
+        height: 260px;
+        object-fit: cover;
+        border-radius: 10px;
+        display: block;
+      }
+      .caption {
+        font-family: Caveat, cursive;
+        font-size: 1.25rem;
+        padding: 7px 3px 2px;
+      }
+      .cake {
+        height: 235px;
+        position: relative;
+        width: 300px;
+        margin: 55px auto 6px;
+      }
+      .shadow {
+        position: absolute;
+        bottom: 8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 260px;
+        height: 16px;
+        background: #ddd0d5;
+        border-radius: 50%;
+        filter: blur(6px);
+      }
+      .tier {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        border-radius: 17px 17px 12px 12px;
+        box-shadow:
+          inset 0 -9px rgba(125, 75, 102, 0.08),
+          0 12px 20px rgba(115, 72, 105, 0.12);
+      }
+      .t1 {
+        bottom: 13px;
+        width: 260px;
+        height: 84px;
+        background: linear-gradient(#ffb7cb, #f68eaa);
+      }
+      .t2 {
+        bottom: 84px;
+        width: 205px;
+        height: 69px;
+        background: linear-gradient(#ffd8e2, #ffb3c8);
+      }
+      .t3 {
+        bottom: 135px;
+        width: 150px;
+        height: 55px;
+        background: linear-gradient(#ffebf1, #ffd4e1);
+      }
+      .icing {
+        position: absolute;
+        top: 0;
+        left: -2px;
+        right: -2px;
+        height: 20px;
+        background: linear-gradient(#fff, #fff5f8);
+        border-radius: 16px;
+      }
+      .drip {
+        position: absolute;
+        top: 12px;
+        width: 16px;
+        height: 19px;
+        background: #fff7fb;
+        border-radius: 0 0 12px 12px;
+      }
+      .d1 {
+        left: 22px;
+      }
+      .d2 {
+        left: 57px;
+        height: 15px;
+      }
+      .d3 {
+        left: 98px;
+        height: 25px;
+      }
+      .d4 {
+        right: 28px;
+      }
+      .berry {
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: #e8466e;
+        box-shadow: inset 0 2px rgba(255, 255, 255, 0.35);
+      }
+      .b1 {
+        left: 22px;
+        top: 25px;
+      }
+      .b2 {
+        right: 22px;
+        top: 25px;
+      }
+      .b3 {
+        left: 65px;
+        top: 11px;
+      }
+      .candle {
+        position: absolute;
+        left: 50%;
+        bottom: 190px;
+        transform: translateX(-50%);
+        width: 23px;
+        height: 62px;
+        border-radius: 9px;
+        background: repeating-linear-gradient(
+          135deg,
+          #fff 0 8px,
+          #ff98b7 8px 16px
+        );
+        border: 2px solid #f1afc2;
+        z-index: 10;
+      }
+      .flame {
+        position: absolute;
+        left: 50%;
+        top: -34px;
+        transform: translateX(-50%);
+        width: 29px;
+        height: 40px;
+        background: linear-gradient(#fff69c, #ffc44d 50%, #ff7541);
+        border-radius: 50% 50% 48% 48%/67% 67% 35% 35%;
+        filter: drop-shadow(0 0 14px rgba(255, 185, 70, 0.8));
+        animation: flame 0.45s alternate infinite;
+      }
+      .off {
+        opacity: 0 !important;
+      }
+      @keyframes flame {
+        to {
+          transform: translateX(-50%) rotate(5deg) scale(1.08, 0.94);
+        }
+      }
+      .smoke {
+        position: absolute;
+        left: 50%;
+        bottom: 250px;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #aaa;
+        opacity: 0;
+        filter: blur(3px);
+      }
+      .smoke.active {
+        animation: smoke 1.6s ease-out forwards;
+      }
+      @keyframes smoke {
+        0% {
+          opacity: 0.7;
+          transform: translate(-50%, 0);
+        }
+        100% {
+          opacity: 0;
+          transform: translate(15px, -80px) scale(5);
+        }
+      }
+      /* letter */
+      .paper {
+        margin-top: 18px;
+        padding: 30px 22px;
+        min-height: 390px;
+        background: radial-gradient(#e7dcae 1px, transparent 1px), #fffbee;
+        background-size: 15px 15px;
+        border: 1px solid #eadfbf;
+        border-radius: 18px;
+        box-shadow: 7px 13px 25px rgba(74, 64, 43, 0.1);
+        transform: rotate(-0.4deg);
+        text-align: left;
+      }
+      .paper h3 {
+        color: #d29d60;
+        font-size: 1.5rem;
+      }
+      .bodytext {
+        font-family: Caveat, cursive;
+        font-size: 1.48rem;
+        line-height: 1.62;
+        color: #3d4537;
+        white-space: pre-wrap;
+        margin-top: 10px;
+      }
+      .seal {
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        margin: 16px auto 0;
+        background: #ad3648;
+        color: #fff;
+      }
+      /* rewards */
+      .rewards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        margin-top: 20px;
+      }
+      .reward {
+        border: 0;
+        background: none;
+        padding: 0;
+        perspective: 1000px;
+      }
+      .ri {
+        position: relative;
+        height: 185px;
+        transform-style: preserve-3d;
+        transition: 0.7s;
+      }
+      .reward.flipped .ri {
+        transform: rotateY(180deg);
+      }
+      .face {
+        position: absolute;
+        inset: 0;
+        backface-visibility: hidden;
+        border-radius: 20px;
+        display: grid;
+        place-items: center;
+        box-shadow: 0 14px 27px rgba(158, 72, 102, 0.13);
+      }
+      .rf {
+        background: repeating-linear-gradient(
+          -45deg,
+          #ff8fac 0 11px,
+          #ffadc1 11px 22px
+        );
+        color: #fff;
+      }
+      .rf:before {
+        content: "";
+        position: absolute;
+        inset: 10px;
+        border: 1.5px dashed #fff;
+        border-radius: 13px;
+      }
+      .gift {
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        background: #fff;
+        color: #ff5b82;
+        display: grid;
+        place-items: center;
+        z-index: 2;
+      }
+      .rb {
+        transform: rotateY(180deg);
+        background: #fff7f9;
+        border: 2px solid #ffd2dd;
+        color: #535568;
+        padding: 15px;
+        text-align: center;
+      }
+      .rb i {
+        font-size: 1.7rem;
+        color: #ff5b82;
+        margin-bottom: 10px;
+      }
+      .reward.locked {
+        opacity: 0.32;
+      }
+      .selected {
+        animation: select 0.7s forwards;
+      }
+      @keyframes select {
+        55% {
+          transform: scale(1.18) rotate(-2deg);
+        }
+        100% {
+          transform: scale(1.1);
+        }
+      }
+      .overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 300;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        background: rgba(57, 24, 39, 0.62);
+        backdrop-filter: blur(13px);
+        padding: 20px;
+      }
+      .overlay.show {
+        display: flex;
+      }
+      .reveal {
+        width: min(430px, 92vw);
+        padding: 30px 24px;
+        border-radius: 30px;
+        background: #fff8fa;
+        text-align: center;
+        box-shadow: 0 35px 80px rgba(0, 0, 0, 0.27);
+        animation: reveal 0.65s cubic-bezier(0.2, 0.8, 0.2, 1);
+      }
+      @keyframes reveal {
+        from {
+          transform: scale(0.45) rotate(-8deg);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+      .revealicon {
+        width: 90px;
+        height: 90px;
+        border-radius: 28px;
+        background: linear-gradient(135deg, #ff7094, #dc3f66);
+        display: grid;
+        place-items: center;
+        color: #fff;
+        font-size: 2.4rem;
+        margin: auto;
+      }
+      .reveal h2 {
+        font-size: 2rem;
+        margin-top: 15px;
+      }
+      .revealname {
+        font-family: "DM Serif Display", serif;
+        color: #d23b60;
+        font-size: 1.5rem;
+        margin: 14px 0 18px;
+      }
+      /* =========================
+   MEMORY GALLERY
+========================= */
+
+.gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 42px;
+  margin-top: 32px;
+  position: relative;
+  padding: 10px 8px 20px;
+}
+
+/* dekorasi umum di area gallery */
+.gallery::before,
+.gallery::after {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.gallery::before {
+  content: "✦  ♡  ✧  🌸";
+  top: 40px;
+  left: -75px;
+  font-size: 1.5rem;
+  color: #ffb7c8;
+  opacity: 0.65;
+  transform: rotate(-12deg);
+  animation: floatDecor 4s ease-in-out infinite;
+}
+
+.gallery::after {
+  content: "♡  ✦  🌷";
+  bottom: 80px;
+  right: -65px;
+  font-size: 1.4rem;
+  color: #f7a9bf;
+  opacity: 0.6;
+  transform: rotate(10deg);
+  animation: floatDecor 5s ease-in-out infinite reverse;
+}
+
+/* =========================
+   PHOTO CARD
+========================= */
+
+.photo {
+  width: 88%;
+  max-width: 620px;
+  min-height: 180px;
+
+  background: #fff;
+  padding: 12px;
+
+  border-radius: 18px;
+
+  box-shadow:
+    0 15px 30px rgba(75, 61, 70, 0.12),
+    0 4px 8px rgba(75, 61, 70, 0.06);
+
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+  align-items: center;
+  gap: 18px;
+
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+/* selotip */
+.photo::before {
+  content: "";
+  position: absolute;
+
+  top: -11px;
+  left: 50%;
+
+  transform: translateX(-50%) rotate(-2deg);
+
+  width: 75px;
+  height: 21px;
+
+  background: #ffb7c8;
+
+  border: 1px dashed rgba(255, 255, 255, 0.8);
+
+  z-index: 2;
+}
+
+/* ornamen kecil setiap kartu */
+.photo::after {
+  content: "✦";
+  position: absolute;
+
+  top: -16px;
+  right: 16px;
+
+  font-size: 1.2rem;
+  color: #ff9fba;
+
+  animation: sparkle 2.5s ease-in-out infinite;
+}
+
+/* kartu ganjil kanan */
+.photo:nth-child(odd) {
+  align-self: flex-end;
+  transform: rotate(1.6deg);
+}
+
+/* kartu genap kiri */
+.photo:nth-child(even) {
+  align-self: flex-start;
+  transform: rotate(-1.6deg);
+}
+
+/* efek hover */
+.photo:hover {
+  transform: rotate(0deg) translateY(-7px) scale(1.02);
+
+  box-shadow:
+    0 22px 38px rgba(75, 61, 70, 0.16),
+    0 7px 12px rgba(75, 61, 70, 0.08);
+}
+
+/* =========================
+   FRAME FOTO
+========================= */
+
+.frame {
+  width: 57%;
+  flex-shrink: 0;
+
+  aspect-ratio: 4 / 3;
+
+  border: 7px solid #fff0f5;
+  outline: 2px solid #ffd4e0;
+
+  border-radius: 12px;
+  overflow: hidden;
+
+  background: #fff6f9;
+
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+}
+
+.frame img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center;
+
+  display: block;
+
+  transition: transform 0.6s ease;
+}
+
+.photo:hover .frame img {
+  transform: scale(1.06);
+}
+
+/* =========================
+   CAPTION DI SAMPING
+========================= */
+
+.pcap {
+  flex: 1;
+
+  font-family: Caveat, cursive;
+  font-size: 1.3rem;
+  line-height: 1.25;
+
+  color: #5b4b54;
+
+  padding: 8px 5px;
+
+  position: relative;
+}
+
+/* garis kecil dekoratif */
+.pcap::before {
+  content: "";
+  display: block;
+
+  width: 35px;
+  height: 3px;
+
+  background: #ffc1d0;
+
+  border-radius: 20px;
+
+  margin-bottom: 9px;
+}
+
+/* =========================
+   ORNAMEN MENGAMBANG
+========================= */
+
+@keyframes floatDecor {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-8deg);
+  }
+
+  50% {
+    transform: translateY(-10px) rotate(4deg);
+  }
+}
+
+@keyframes sparkle {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.9) rotate(0deg);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.15) rotate(15deg);
+  }
+}
+
+/* =========================
+   RESPONSIVE MOBILE
+========================= */
+
+@media (max-width: 650px) {
+  .gallery {
+    gap: 34px;
+    padding: 5px 0 15px;
+  }
+
+  .photo {
+    width: 94%;
+    min-height: 145px;
+
+    gap: 12px;
+    padding: 9px;
+
+    border-radius: 15px;
+  }
+
+  .frame {
+    width: 55%;
+    border-width: 5px;
+  }
+
+  .pcap {
+    font-size: 1.12rem;
+  }
+
+  .gallery::before {
+    left: -15px;
+    font-size: 1rem;
+  }
+
+  .gallery::after {
+    right: -10px;
+    font-size: 1rem;
+  }
+}
+      /* closing */
+      .closing {
+        text-align: center;
+      }
+      .heartbig {
+        width: 105px;
+        height: 105px;
+        border-radius: 35px;
+        margin: 0 auto 17px;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(145deg, #ff7193, #de3c64);
+        color: #fff;
+        font-size: 3rem;
+        box-shadow: 0 24px 48px rgba(222, 60, 100, 0.23);
+        animation: beat 1.8s infinite;
+      }
+      @keyframes beat {
+        20% {
+          transform: scale(1.08);
+        }
+        40% {
+          transform: scale(1);
+        }
+        60% {
+          transform: scale(1.05);
+        }
+        80% {
+          transform: scale(1);
+        }
+      }
+      .closing p {
+        line-height: 1.9;
+        color: #717480;
+        max-width: 540px;
+        margin: 14px auto;
+      }
+      .sign {
+        font-family: Caveat, cursive;
+        color: #d13c60;
+        font-size: 1.8rem;
+        margin-top: 20px;
+      }
+      @media (max-width: 560px) {
+        .slide {
+          padding: 70px 9px 30px;
+        }
+        .card {
+          padding: 23px 14px;
+          border-radius: 24px;
+        }
+        .title {
+          font-size: 1.9rem;
+        }
+        .lovephoto img {
+          height: 220px;
+        }
+        .ri {
+          height: 160px;
+        }
+        .frame img {
+          height: 100%;
+        }
+        .gallery {
+          gap: 22px;
+        }
+        .photo {
+          width: 72%;
+          max-width: 300px;
+        }
+      }
+      @media (max-width: 390px) {
+        .rewards {
+          gap: 7px;
+        }
+        .ri {
+          height: 148px;
+        }
+        .frame img {
+          height: 100%;
+        }
+        .front {
+          font-size: 0.9rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <audio
+      id="music"
+      loop
+      src="/lagu.mp3"
+    ></audio
+    ><button class="music" id="musicBtn" onclick="toggleMusic()">
+      <i id="musicIcon" class="fa-solid fa-music"></i>
+    </button>
+    <div class="progress">
+      <span class="dot active"></span><span class="dot"></span
+      ><span class="dot"></span><span class="dot"></span
+      ><span class="dot"></span><span class="dot"></span>
+    </div>
+    <div class="bg" id="bg"></div>
+    <section class="slide active" id="slide1">
+      <div class="card center">
+        <div class="eyebrow">
+          <i class="fa-solid fa-puzzle-piece"></i> Main teka-teki yuk!
+        </div>
+        <h1 class="title">Coba cari pasangan yang pas 🤍</h1>
+        <p class="sub">
+          Sama kayak kita yang akhirnya saling nemuin, coba deh cocokin
+          kartu-kartu ini buat lanjut ke halaman sebelah.
+        </p>
+        <div class="counter">
+          Pasangan ditemukan: <span id="pairs">0</span> / 3
+        </div>
+        <div class="memory"><div class="grid" id="memoryGrid"></div></div>
+        <p class="sub" id="memoryHint">
+          Pelan-pelan aja mainnya. Ada sesuatu yang manis nungguin kamu di akhir
+          💌
+        </p>
+      </div>
+    </section>
+    <section class="slide" id="slide2">
+      <div class="card center">
+        <div class="flower-row" aria-label="Tiga bunga tulip">
+          <span class="tulip-emoji">🌷</span><span class="tulip-emoji">🌷</span
+          ><span class="tulip-emoji">🌷</span>
+        </div>
+        <div style="color: #e5a63a; letter-spacing: 8px">✦ ✧ ✦</div>
+        <h2 class="title">Happy Birthday Sayangkuu🎂</h2>
+        <p class="sub">
+          Hari ini tuh spesial banget. Bukan cuma karena kamu lahir, tapi karena
+          aku dikasih kesempatan buat ngerayainnya bareng kamu.
+        </p>
+        <div class="lovephoto">
+          <img src="gambar/foto-awal.jpg" alt="Foto pacar" />
+          <div class="caption">
+            Buat senyum yang selalu bikin aku jatuh cinta berkali-kali.
+          </div>
+        </div>
+        <h3 style="font-size: 1.35rem; margin-top: 8px">
+          Make a wish dulu, yuk! ✨
+        </h3>
+        <div class="cake">
+          <div class="shadow"></div>
+          <div class="tier t1">
+            <div class="icing">
+              <span class="drip d1"></span><span class="drip d2"></span
+              ><span class="drip d3"></span><span class="drip d4"></span>
+            </div>
+          </div>
+          <div class="tier t2">
+            <div class="icing">
+              <span class="drip d1"></span><span class="drip d2"></span
+              ><span class="drip d3"></span>
+            </div>
+            <div class="berry b1"></div>
+            <div class="berry b2"></div>
+          </div>
+          <div class="tier t3">
+            <div class="icing">
+              <span class="drip d2"></span><span class="drip d3"></span>
+            </div>
+            <div class="berry b3"></div>
+          </div>
+          <div class="candle" onclick="blowCandle()">
+            <div class="flame" id="flame"></div>
+          </div>
+          <div class="smoke" id="smoke"></div>
+        </div>
+        <div
+          class="sub"
+          style="background: #fff5f8; padding: 10px; border-radius: 13px"
+        >
+          Tutup mata sebentar, bisikin satu harapan kamu dalam hati, terus tiup
+          lilinnya (bisa klik apinya atau tiup beneran lewat mic). Semoga
+          semesta dengar ya 🌷
+        </div>
+        <div
+          style="
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 12px;
+          "
+        >
+          <button class="btn secondary" id="micBtn" onclick="useMic()">
+            <i class="fa-solid fa-microphone"></i>Tiup lilinnya</button
+          ><button
+            class="btn primary"
+            id="cakeNext"
+            style="display: none"
+            onclick="goTo(3)"
+          >
+            Lanjut ke surat <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+    <section class="slide" id="slide3">
+      <div class="card center">
+        <div class="eyebrow">
+          <i class="fa-solid fa-envelope"></i> Surat untukmu
+        </div>
+        <h2 class="title">Baca pelan-pelan ya sayang🤍</h2>
+        <p class="sub">
+          Sabar yaa, agak panjang nii soalnya.
+        </p>
+        <div class="paper">
+          <h3>Dear Sayangku, Mala</h3>
+          <div id="letterBody" class="bodytext"></div>
+          <div class="seal"><i class="fa-solid fa-heart"></i></div>
+        </div>
+        <button
+          class="btn primary"
+          id="letterNext"
+          style="margin-top: 20px; opacity: 0.5"
+          disabled
+        >
+          Surat sedang dibuka…
+        </button>
+      </div>
+    </section>
+    <section class="slide" id="slide4">
+      <div class="card center">
+        <div class="eyebrow">
+          <i class="fa-solid fa-gift"></i> Ada surprise dikit nih
+        </div>
+        <h2 class="title">Pilih satu kartu buat kadomu 💝</h2>
+        <p class="sub">
+          Di balik kartu ini ada kejutan yang udah aku siapin. Tapi inget, kalau
+          udah milih satu, yang lain bakal dikunci ya!
+        </p>
+        <div class="rewards">
+          <button
+            class="reward"
+            data-name="Jalan-jalan Cari Matcha & Dimsum🍵"
+            data-icon="fa-gift"
+            onclick="chooseReward(this)"
+          >
+            <div class="ri">
+              <div class="face rf">
+                <div class="gift"><i class="fa-solid fa-gift"></i></div>
+              </div>
+              <div class="face rb">
+                <i class="fa-solid fa-gift"></i
+                ><b>Jalan-jalan Cari Matcha & Dimsum🍵</b>
+              </div>
+            </div></button
+          ><button
+            class="reward"
+            data-name="Nonton Bioskop Berdua🎬"
+            data-icon="fa-gift"
+            onclick="chooseReward(this)"
+          >
+            <div class="ri">
+              <div class="face rf">
+                <div class="gift"><i class="fa-solid fa-gift"></i></div>
+              </div>
+              <div class="face rb">
+                <i class="fa-solid fa-gift"></i><b>Nonton Bioskop Berdua🎬</b>
+              </div>
+            </div></button
+          ><button
+            class="reward"
+            data-name="Kupon VVIP: Bebas Request ✨"
+            data-icon="fa-gift"
+            onclick="chooseReward(this)"
+          >
+            <div class="ri">
+              <div class="face rf">
+                <div class="gift"><i class="fa-solid fa-gift"></i></div>
+              </div>
+              <div class="face rb">
+                <i class="fa-solid fa-gift"></i
+                ><b>Kupon VVIP: Bebas Request ✨</b>
+              </div>
+            </div>
+          </button>
+        </div>
+        <p class="sub" style="margin-top: 16px">
+          Pilih pakai feeling kamu. Jangan serakah, satu aja cukup 😜
+        </p>
+      </div>
+    </section>
+    <div class="overlay" id="overlay">
+      <div class="reveal">
+        <div class="revealicon" id="revealIcon"></div>
+        <h2>Yeay, ini buat kamu! ✨</h2>
+        <p class="sub">
+          Ternyata takdir milih kita buat ngabisin waktu bareng dengan cara ini:
+        </p>
+        <div class="revealname" id="revealName"></div>
+        <button class="btn primary" style="width: 100%" onclick="rewardNext()">
+          Lanjut lihat memori kita <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+    <section class="slide" id="slide5">
+      <div class="card">
+        <div class="center">
+          <div class="eyebrow">
+            <i class="fa-solid fa-camera-retro"></i> Mesin waktu kita
+          </div>
+          <h2 class="title">Sedikit recap dari cerita kita sejauh ini 📸</h2>
+          <p class="sub">
+            Dari sekian banyak hari yang udah kita lewatin, ini beberapa momen
+            yang selalu berhasil bikin aku senyum-senyum sendiri kalau lagi
+            kangen.
+          </p>
+        </div>
+        <div class="gallery">
+
+  <article class="photo">
+    <div class="frame">
+      <img src="gambar/momen-1.jpg" alt="Momen 1" />
+    </div>
+
+    <div class="pcap">
+      Malam sederhana di Solo sebelum mudik ke Wonogiri tempat sepiring nasi goreng jadi saksi canggungnya awal cerita kita.
+    </div>
+  </article>
+
+
+  <article class="photo">
+    <div class="frame">
+      <img src="gambar/momen-2.jpg" alt="Momen 2" />
+    </div>
+
+    <div class="pcap">
+      Pertama kali main ke Pantai Ngetun bareng, tempat angin laut dan tawa kamu bikin aku sadar betapa bahagianya ada di dekatmu.
+    </div>
+  </article>
+
+
+  <article class="photo">
+    <div class="frame">
+      <img src="gambar/momen-3.jpg" alt="Momen 3" />
+    </div>
+
+    <div class="pcap">
+      Dari belanja bareng, nonton film, sampai makan mie ayam, first date kita ngebuktiin kalau hal biasa bakal terasa luar biasa kalau dilakuin bareng kamu.
+    </div>
+  </article>
+
+
+  <article class="photo">
+    <div class="frame">
+      <img src="gambar/momen-4.jpg" alt="Momen 4" />
+    </div>
+
+    <div class="pcap">
+      Jalan-jalan malam ke Kotabaru demi semangkuk mie yamin, ditemenin obrolan random yang selalu berhasil bikin aku nyaman.
+    </div>
+  </article>
+
+
+  <article class="photo">
+    <div class="frame">
+      <img src="gambar/momen-5.jpg" alt="Momen 5" />
+    </div>
+
+    <div class="pcap">
+      Duduk berdua liat sunset di Bukit Bintang bikin aku sadar, secantik apa pun langit sore, pemandangan favoritku tetap kamu.
+    </div>
+  </article>
+
+</div>
+
+<div
+  style="
+    margin-top: 24px;
+    border-top: 1px dashed #ffc1d0;
+    padding-top: 18px;
+    text-align: center;
+  "
+>
+  <button class="btn primary" onclick="goTo(6)">
+    Lanjut ke penutup
+    <i class="fa-solid fa-arrow-right"></i>
+  </button>
+</div>
+    </section>
+    <section class="slide" id="slide6">
+      <div class="card center">
+        <div class="heartbig"><i class="fa-solid fa-heart"></i></div>
+        <div class="eyebrow">
+          <i class="fa-solid fa-star"></i> Satu hal lagi sebelum selesai
+        </div>
+        <h2 class="title">Makasih ya, udah milih buat ada di hidupku.</h2>
+        <p
+          class="sub"
+          style="max-width: 550px; margin: 12px auto; line-height: 1.95"
+        >
+          Website ini mungkin nggak seberapa, tapi setiap halaman di dalamnya
+          sengaja aku buat biar kamu tahu: kamu seberharga itu. Setiap detik
+          bareng kamu tuh rasanya kayak baca buku favorit, nggak pernah
+          ngebosenin.
+          <br /><br />
+          Sekali lagi, selamat ulang tahun, sayang. Semoga semesta selalu baik
+          sama kamu, langkahmu makin ringan, dan semoga kita tetap sama-sama
+          nulis bab baru di cerita ini ya. 🤍
+        </p>
+        <div
+          style="
+            font-family: Caveat, cursive;
+            color: #d23c60;
+            font-size: 1.8rem;
+          "
+        >
+          Selalu dan akan terus menyayangimu. 🌷
+        </div>
+        <div
+          style="
+            margin-top: 24px;
+            border-top: 1px dashed #ffc1d0;
+            padding-top: 18px;
+          "
+        >
+          <h3 style="font-size: 1.3rem; margin: 0 0 6px">
+            Now, it's your turn 💌
+          </h3>
+          <p class="sub" style="margin: 0 auto">
+            Kalau udah selesai baca semuanya, chat aku yaa. Kasih tahu rasanya
+            gimana setelah lihat ini, aku nungguin lho. 🤍
+          </p>
+        </div>
+      </div>
+    </section>
+    <script>
+      const music = document.getElementById("music"),
+        musicBtn = document.getElementById("musicBtn"),
+        musicIcon = document.getElementById("musicIcon");
+      let playing = false;
+      function musicOn() {
+        if (!playing)
+          music
+            .play()
+            .then(() => {
+              playing = true;
+              musicBtn.classList.add("play");
+              musicIcon.className = "fa-solid fa-compact-disc";
+            })
+            .catch(() => {});
+      }
+      function toggleMusic() {
+        if (playing) {
+          music.pause();
+          playing = false;
+          musicBtn.classList.remove("play");
+          musicIcon.className = "fa-solid fa-music";
+        } else musicOn();
+      }
+      let slide = 1;
+      function goTo(n) {
+        document
+          .querySelectorAll(".slide")
+          .forEach((s) => s.classList.remove("active"));
+        document.getElementById("slide" + n).classList.add("active");
+        slide = n;
+        document.querySelectorAll(".dot").forEach((d, i) => {
+          d.classList.toggle("active", i + 1 === n);
+          d.classList.toggle("done", i + 1 < n);
+        });
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        if (n === 3) startLetter();
+        if (n === 6)
+          confetti({ particleCount: 120, spread: 105, origin: { y: 0.35 } });
+      }
+      const puzzleCards = [
+        { id: "flower", icon: "🌷", label: "Bunga" },
+        { id: "heart", icon: "💗", label: "Hati" },
+        { id: "gift", icon: "🎁", label: "Hadiah" },
+      ];
+      const symbols = puzzleCards.flatMap((x) => [x, x]);
+      let first = null,
+        second = null,
+        locked = false,
+        pairs = 0;
+      function shuf(a) {
+        a = [...a];
+        for (let i = a.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
+      }
+      function makeMemory() {
+        const g = document.getElementById("memoryGrid");
+        if (!g) return;
+        g.innerHTML = "";
+        shuf(symbols).forEach((x) => {
+          const b = document.createElement("button");
+          b.className = "mcard";
+          b.type = "button";
+          b.dataset.s = x.id;
+          b.setAttribute("aria-label", "Kartu puzzle " + x.label);
+          b.innerHTML =
+            '<span class="mi"><span class="mf back"><span style="font-size:1.35rem">💗</span></span><span class="mf front"><span class="front-emoji" aria-hidden="true">' +
+            x.icon +
+            "</span></span></span>";
+          b.addEventListener("click", () => flip(b));
+          g.appendChild(b);
+        });
+      }
+      function flip(c) {
+        if (
+          locked ||
+          c.classList.contains("flipped") ||
+          c.classList.contains("matched")
+        )
+          return;
+        c.classList.add("flipped");
+        if (!first) {
+          first = c;
+          return;
+        }
+        second = c;
+        locked = true;
+        if (first.dataset.s === second.dataset.s) {
+          setTimeout(() => {
+            first.classList.add("matched");
+            second.classList.add("matched");
+            pairs++;
+            document.getElementById("pairs").textContent = pairs;
+            first = null;
+            second = null;
+            locked = false;
+            if (pairs === 3) {
+              /* mulai musik hanya setelah puzzle selesai */ document.getElementById(
+                "memoryHint",
+              ).innerHTML =
+                '<i class="fa-solid fa-heart"></i> Semua pasangan ditemukan. Selamat datang di kejutanmu 💗';
+              confetti({ particleCount: 120, spread: 90, origin: { y: 0.65 } });
+              musicOn();
+              setTimeout(() => goTo(2), 850);
+            }
+          }, 430);
+        } else {
+          first.classList.add("shake");
+          second.classList.add("shake");
+          setTimeout(() => {
+            first.classList.remove("flipped", "shake");
+            second.classList.remove("flipped", "shake");
+            first = null;
+            second = null;
+            locked = false;
+          }, 700);
+        }
+      }
+      let candle = false;
+      function blowCandle() {
+        if (candle) return;
+        candle = true;
+        document.getElementById("flame").classList.add("off");
+        document.getElementById("smoke").classList.add("active");
+        document.getElementById("micBtn").style.display = "none";
+        document.getElementById("cakeNext").style.display = "inline-block";
+        confetti({ particleCount: 170, spread: 110, origin: { y: 0.55 } });
+      }
+      let stream = null,
+        ctx = null,
+        raf = null;
+      async function useMic() {
+        try {
+          stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          ctx = new (window.AudioContext || window.webkitAudioContext)();
+          let source = ctx.createMediaStreamSource(stream),
+            an = ctx.createAnalyser();
+          an.fftSize = 512;
+          source.connect(an);
+          let data = new Uint8Array(an.frequencyBinCount);
+          document.getElementById("micBtn").textContent = "Tiup sekarang…";
+          function detect() {
+            if (candle) {
+              cleanup();
+              return;
+            }
+            an.getByteFrequencyData(data);
+            let avg = data.reduce((a, b) => a + b, 0) / data.length;
+            if (avg > 54) {
+              blowCandle();
+              cleanup();
+              return;
+            }
+            raf = requestAnimationFrame(detect);
+          }
+          detect();
+        } catch (e) {
+          alert("Mikrofon tidak tersedia. Klik api lilinnya saja ya 😊");
+        }
+      }
+      function cleanup() {
+        if (raf) cancelAnimationFrame(raf);
+        if (stream) stream.getTracks().forEach((t) => t.stop());
+        if (ctx) ctx.close().catch(() => {});
+        stream = ctx = raf = null;
+      }
+      const letter = `Selamat bertambah usia, Sayang. Cie, usianya udah dua dekade lebih satu, nih. Perjalanannya udah lumayan jauh ya?
+
+Di umurmu yang makin dewasa ini, aku cuma pengen kamu tahu kalau apa pun yang jadi kemauan dan mimpimu, aku bakal selalu ada di barisan paling depan buat dukung kamu. Semoga jalanmu di semester-semester depan makin dilancarkan, urusan kuliahnya dimudahkan sampai nanti waktunya kamu pakai toga, dan semua doa yang kamu rapel dalam hati bisa satu per satu dikabulkan. Ingat ya, buat ngelewatin semua proses itu, kamu nggak bakal sendirian. Aku ikut nemenin.
+
+Lewat pesan sederhana ini, aku juga mau minta maaf. Maaf ya, kalau sampai hari ini aku mungkin belum bisa jadi pasangan yang sepenuhnya sesuai sama harapan kamu. Kadang komunikasiku masih berantakan, ngatur waktuku masih payah, dan jujur... aku masih suka linglung harus gimana waktu ngadepin kamu. Aku tahu, semua kekuranganku itu pasti masih sering bikin kamu kecewa.
+
+Tapi dari semua hal yang masih kurang di diriku, satu hal yang pasti: aku nggak akan berhenti berusaha. Aku bakal terus belajar buat memperbaiki itu semua, pelan-pelan jadi versi yang lebih baik dan pantes buat kamu. Makasih ya, udah selalu sabar dan ngasih aku ruang buat bertumbuh bareng kamu.
+
+Selamat menikmati usia barumu. Aku sayang kamu. 🤍`;
+      let typing = false,
+        pos = 0;
+      function startLetter() {
+        if (typing) return;
+        typing = true;
+        let el = document.getElementById("letterBody"),
+          btn = document.getElementById("letterNext");
+        el.textContent = "";
+        function t() {
+          if (pos < letter.length) {
+            el.textContent += letter.charAt(pos++);
+            setTimeout(t, 28);
+          } else {
+            btn.disabled = false;
+            btn.textContent = "Aku udah baca →";
+            btn.style.opacity = "1";
+            btn.onclick = () => goTo(4);
+          }
+        }
+        t();
+      }
+      let rewardLocked = false;
+      function chooseReward(card) {
+        if (rewardLocked) return;
+        rewardLocked = true;
+        document.querySelectorAll(".reward").forEach((x) => {
+          if (x !== card) x.classList.add("locked");
+        });
+        card.classList.add("flipped");
+        setTimeout(() => {
+          card.classList.add("selected");
+          document.getElementById("revealIcon").innerHTML =
+            '<i class="fa-solid ' + card.dataset.icon + '"></i>';
+          document.getElementById("revealName").textContent = card.dataset.name;
+          document.getElementById("overlay").classList.add("show");
+          confetti({ particleCount: 160, spread: 100, origin: { y: 0.55 } });
+        }, 700);
+      }
+      function rewardNext() {
+        document.getElementById("overlay").classList.remove("show");
+        goTo(5);
+      }
+      window.addEventListener("load", () => {
+        makeMemory();
+        for (let i = 0; i < 18; i++) {
+          let p = document.createElement("div");
+          p.className = "petal";
+          p.style.left = Math.random() * 100 + "%";
+          p.style.animationDuration = 9 + Math.random() * 9 + "s";
+          p.style.animationDelay = Math.random() * 8 + "s";
+          document.getElementById("bg").appendChild(p);
+        }
+      });
+      window.addEventListener("beforeunload", cleanup);
+    </script>
+  </body>
+</html>
